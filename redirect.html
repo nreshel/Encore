@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Page</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="dialog-polyfill.css" />
+  <link rel="stylesheet" type="text/css" href="global.css">
+  <link rel="shortcut icon" href="images/proj.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+<body onload="UserLogin()">
+  <p id="nameTest"></p>
+  <button onclick="SignOut()">Sign Out</button>
+  <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDJ5nvJatNcABxxpZx2jDWff1k5fsz-K30",
+      authDomain: "encore-5f0bd.firebaseapp.com",
+      databaseURL: "https://encore-5f0bd.firebaseio.com",
+      storageBucket: "encore-5f0bd.appspot.com",
+      messagingSenderId: "236662492276"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <!-- <script>
+      var dialog = document.querySelector('#login-dailog');
+      dialogPolyfill.registerDialog(dialog);
+      // Now dialog acts like a native <dialog>.
+      dialog.showModal();
+    </script> -->
+ <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script type="text/javascript" src="scripts/login.js"></script>
+  <script src="dialog-polyfill.js"></script>
+</body>
+</html>

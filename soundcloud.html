@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Project</title>
+		<script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
+		<script>
+			var nextCursor;
+			var nextHref;
+			var myGenres=['Rap', 'Jazz', 'Pop', 'Rock'];
+			var userID, favCount, trackID, likeCount, playBackCount, repostCount, username, TotalFavCount=0, TotalPlayBacks=0, TotalFollowers=0;
+			var userList = [];
+			var usrFollowers = [];
+			var i =0;
+			SC.initialize({
+			  client_id: 'G0KafUUyQg2qCqyfp1YswhR4TZZA35Tc'
+			});
+
+	  		SC.get('/tracks', {genres: "pop", limit:200}).then(function(response){
+	  			for(var i = 0; i < response.length; i++){
+	  				// console.log(response[i].user_id, response[i].genre, response[i].playback_count, response[i].likes_count);
+	  				UsersPop(response[i].user_id, response[i].genre, response[i].playback_count, response[i].likes_count);
+	  			}
+	  		});
+
+	  		SC.get('/tracks', {genres: "rock", limit:200}).then(function(response){
+	  			for(var i = 0; i < response.length; i++){
+	  				// console.log(response[i].user_id, response[i].genre, response[i].playback_count, response[i].likes_count);
+	  				UsersRock(response[i].user_id, response[i].genre, response[i].playback_count, response[i].likes_count);
+	  			}
+	  		});
+
+	  		SC.get('/tracks', {genres: "rap", limit:200}).then(function(response){
+	  			for(var i = 0; i < response.length; i++){
+	  				// console.log(response[i].user_id, response[i].genre, response[i].playback_count, response[i].likes_count);
+	  				UsersRap(response[i].user_id, response[i].genre, response[i].playback_count, response[i].likes_count);
+	  			}
+	  		});
+
+	  		SC.get('/tracks', {genres: "R&B", limit:200}).then(function(response){
+	  			for(var i = 0; i < response.length; i++){
+	  				// console.log(response[i].user_id, response[i].genre, response[i].playback_count, response[i].likes_count);
+	  				UsersRnB(response[i].user_id, response[i].genre, response[i].playback_count, response[i].likes_count);
+	  			}
+	  		});
+
+			// this will run a loop in the genre list arra
+			function UsersPop(id, genre, playback, likes){
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						var count = 0;
+						var data = JSON.parse(xmlhttp.responseText);
+						// console.log(data);
+						var user = {};
+						user.username = data.username;
+						user.followers = data.followers_count;
+						user.genre = genre;
+						user.playback = playback;
+						user.likes = likes;
+						user.picture = data.avatar_url;
+						user.tracks = data.track_count;
+						console.log(user);
+
+						firebase.database().ref('soundcloud/user/Pop/'+ user.username).set({
+							User: user.username,
+							Followers: user.followers,
+							Genre: user.genre,
+							Playbacks: user.playback,
+							Likes: user.likes,
+							Picture: user.picture,
+							Tracks: user.tracks
+						});
+					};
+				};
+				xmlhttp.open("GET","http://api.soundcloud.com/users/"+id+"?client_id=G0KafUUyQg2qCqyfp1YswhR4TZZA35Tc",true);
+				xmlhttp.send();
+			}
+
+			function UsersRock(id, genre, playback, likes){
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						var count = 0;
+						var data = JSON.parse(xmlhttp.responseText);
+						// console.log(data);
+						var user = {};
+						user.username = data.username;
+						user.followers = data.followers_count;
+						user.genre = genre;
+						user.playback = playback;
+						user.likes = likes;
+						user.picture = data.avatar_url;
+						user.tracks = data.track_count;
+						console.log(user);
+
+						firebase.database().ref('soundcloud/user/Rock/'+ user.username).set({
+							User: user.username,
+							Followers: user.followers,
+							Genre: user.genre,
+							Playbacks: user.playback,
+							Likes: user.likes,
+							Picture: user.picture,
+							Tracks: user.tracks
+						});
+					};
+				};
+				xmlhttp.open("GET","http://api.soundcloud.com/users/"+id+"?client_id=G0KafUUyQg2qCqyfp1YswhR4TZZA35Tc",true);
+				xmlhttp.send();
+			}
+
+			function UsersRap(id, genre, playback, likes){
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						var count = 0;
+						var data = JSON.parse(xmlhttp.responseText);
+						// console.log(data);
+						var user = {};
+						user.username = data.username;
+						user.followers = data.followers_count;
+						user.genre = genre;
+						user.playback = playback;
+						user.likes = likes;
+						user.picture = data.avatar_url;
+						user.tracks = data.track_count;
+						console.log(user);
+
+						firebase.database().ref('soundcloud/user/Rap/'+ user.username).set({
+							User: user.username,
+							Followers: user.followers,
+							Genre: user.genre,
+							Playbacks: user.playback,
+							Likes: user.likes,
+							Picture: user.picture,
+							Tracks: user.tracks
+						});
+					};
+				};
+				xmlhttp.open("GET","http://api.soundcloud.com/users/"+id+"?client_id=G0KafUUyQg2qCqyfp1YswhR4TZZA35Tc",true);
+				xmlhttp.send();
+			}
+
+			function UsersRnB(id, genre, playback, likes){
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						var count = 0;
+						var data = JSON.parse(xmlhttp.responseText);
+						// console.log(data);
+						var user = {};
+						user.username = data.username;
+						user.followers = data.followers_count;
+						user.genre = genre;
+						user.playback = playback;
+						user.likes = likes;
+						user.picture = data.avatar_url;
+						user.tracks = data.track_count;
+						console.log(user);
+
+						firebase.database().ref('soundcloud/user/R&B/'+ user.username).set({
+							User: user.username,
+							Followers: user.followers,
+							Genre: user.genre,
+							Playbacks: user.playback,
+							Likes: user.likes,
+							Picture: user.picture,
+							Tracks: user.tracks
+						});
+					};
+				};
+				xmlhttp.open("GET","http://api.soundcloud.com/users/"+id+"?client_id=G0KafUUyQg2qCqyfp1YswhR4TZZA35Tc",true);
+				xmlhttp.send();
+			}
+			//At the moment i have a static user id, we will replace this with the array
+			//we request each user(userID) and all thier tracks and it will count up all the favorites count and playback counts for all tracks
+		</script>
+	</head>
+	<body>
+		<ul></ul>
+		<div id="data">
+			
+		</div>
+			<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyDJ5nvJatNcABxxpZx2jDWff1k5fsz-K30",
+			authDomain: "encore-5f0bd.firebaseapp.com",
+			databaseURL: "https://encore-5f0bd.firebaseio.com",
+			storageBucket: "encore-5f0bd.appspot.com",
+			messagingSenderId: "236662492276"
+		};
+		firebase.initializeApp(config);
+	</script>
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	<script type="text/javascript" src="scripts/login.js"></script>
+	<script src="dialog-polyfill.js"></script>
+	</body>
+</html>
